@@ -21,6 +21,14 @@ app.use("/api/auth", toNodeHandler(auth));
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
+app.get('/device', (req, res) => {
+  const userCode = req.query.user_code;
+
+  console.log(`Received user_code: ${userCode}`);
+
+  res.redirect(`http://localhost:3000/device?device_code=${userCode}`);
+});
+
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);

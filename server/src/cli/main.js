@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import { Command } from "commander";
 import chalk from "chalk";
 import figlet from "figlet";
-import { login} from "./commands/auth/login.js";
+import { login, whoami,logout} from "./commands/auth/login.js";
 dotenv.config();
 
 
@@ -18,7 +18,9 @@ async function main() {
     program
         .version("1.0.0")
         .description("AI based CLI Server for executing commands and managing tasks.")
-        .addCommand(login);
+        .addCommand(login)
+        .addCommand(logout)
+        .addCommand(whoami)
     program.action(() => {
         program.help();
     });

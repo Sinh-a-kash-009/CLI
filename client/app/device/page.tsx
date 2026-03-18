@@ -12,27 +12,30 @@ export default function DeviceAuthorizationPage() {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError(null)
-    setIsLoading(true)
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault()
+  setError(null)
+  setIsLoading(true)
 
-    try {
-      const formattedCode = userCode.trim().replace(/-/g, "").toUpperCase()
+  try {
+    const formattedCode = userCode.trim().replace(/-/g, "").toUpperCase()
 
-      const response = await authClient.device({
-        query: { user_code: formattedCode },
-      })
+    // update input via state
+    setUserCode(formattedCode)
 
-      if (response.data) {
-        router.push(`/approve?user_code=${formattedCode}`)
-      }
-    } catch (err) {
-      setError("Invalid or expired code")
-    } finally {
-      setIsLoading(false)
+    const response = await authClient.device({
+      query: { user_code: formattedCode },
+    })
+
+    if (response.data) {
+      router.push(`/approve?user_code=${formattedCode}`)
     }
+  } catch (err) {
+    setError("Invalid or expired code")
+  } finally {
+    setIsLoading(false)
   }
+}
 
   const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "")

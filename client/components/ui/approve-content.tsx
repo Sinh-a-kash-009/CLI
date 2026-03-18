@@ -27,7 +27,7 @@ export default function DeviceApprovalContent() {
   }
 
   if (!data?.session && !data?.user) {
-    router.push("/sign-in");
+    router.push("/auth/sign-in");
     return null;
   }
 
